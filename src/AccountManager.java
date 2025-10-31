@@ -9,18 +9,18 @@ public class AccountManager {
     private final AccountDao accountDao;
     private final TransactionDao txDao;
 
-    // ✅ Constructor initializes DAOs
+    //  Constructor initializes DAOs
     public AccountManager() {
         this.accountDao = new AccountDao();
         this.txDao = new TransactionDao();
     }
 
-    // ✅ Create account (used in BankingApp)
+    //  Create account (used in BankingApp)
     public void createAccount(Account a) {
         accountDao.createAccount(a);
     }
 
-    // ✅ Overloaded version (optional, used for other setups)
+    //  Overloaded version (optional, used for other setups)
     public void createAccount(String accNo, String name, String email, String password, BigDecimal balance, String status) {
         Account acc = new Account(accNo, name, email, balance);
         acc.setPassword(password);
@@ -28,7 +28,7 @@ public class AccountManager {
         accountDao.createAccount(acc);
     }
 
-    // ✅ Deposit logic
+    //  Deposit logic
     public void deposit(String accNo, BigDecimal amount) {
         if (!ValidationUtils.isPositiveAmount(amount))
             throw new IllegalArgumentException("Invalid deposit amount");
@@ -45,7 +45,7 @@ public class AccountManager {
         txDao.saveTransaction(tx);
     }
 
-    // ✅ Withdraw logic (with ₹100 minimum balance validation)
+    //  Withdraw logic (with ₹100 minimum balance validation)
     public void withdraw(String accNo, BigDecimal amount) {
         if (!ValidationUtils.isPositiveAmount(amount))
             throw new IllegalArgumentException("Invalid withdrawal amount");
@@ -54,7 +54,7 @@ public class AccountManager {
         if (a == null)
             throw new IllegalArgumentException("Account not found: " + accNo);
 
-        // ✅ Minimum balance check: ₹100 must remain
+        //  Minimum balance check: ₹100 must remain
         BigDecimal minBalance = new BigDecimal("100");
         if (a.getBalance().subtract(amount).compareTo(minBalance) < 0)
             throw new IllegalArgumentException("You must maintain a minimum balance of ₹100");
@@ -70,7 +70,7 @@ public class AccountManager {
         txDao.saveTransaction(tx);
     }
 
-    // ✅ Transfer logic
+    //  Transfer logic
     public void transfer(String fromAccNo, String toAccNo, BigDecimal amount) {
         if (!ValidationUtils.isPositiveAmount(amount))
             throw new IllegalArgumentException("Invalid transfer amount");
@@ -81,7 +81,7 @@ public class AccountManager {
         if (from == null || to == null)
             throw new IllegalArgumentException("One or both accounts not found");
 
-        // ✅ Minimum balance validation
+        //  Minimum balance validation
         BigDecimal minBalance = new BigDecimal("100");
         if (from.getBalance().subtract(amount).compareTo(minBalance) < 0)
             throw new IllegalArgumentException("You must maintain a minimum balance of ₹100 after transfer");
@@ -100,17 +100,17 @@ public class AccountManager {
         txDao.saveTransaction(tx);
     }
 
-    // ✅ Fetch account by account number
+    //  Fetch account by account number
     public Account getAccount(String accNo) {
         return accountDao.findByAccountNumber(accNo);
     }
 
-    // ✅ Log transaction (used by BankingApp)
+    //  Log transaction (used by BankingApp)
     public void logTransaction(TransactionRecord tx) {
         txDao.saveTransaction(tx);
     }
 
-    // ✅ Apply monthly interest (optional feature)
+    //  Apply monthly interest (optional feature)
     public void applyMonthlyInterest() {
         List<Account> accounts = accountDao.listAllAccounts();
         BigDecimal monthlyRate = new BigDecimal("0.005"); // 0.5% per month
@@ -125,7 +125,7 @@ public class AccountManager {
         }
     }
 
-    // ✅ Flag inactive accounts (optional)
+    //  Flag inactive accounts (optional)
     public void flagInactiveAccounts() {
         List<Account> accounts = accountDao.listAllAccounts();
         LocalDate today = LocalDate.now();
@@ -139,17 +139,17 @@ public class AccountManager {
         }
     }
 
-    // ✅ List all accounts (used in console and tests)
+    //  List all accounts (used in console and tests)
     public List<Account> listAllAccounts() {
         return accountDao.listAllAccounts();
     }
 
-    // ✅ Delete account by account number
+    //  Delete account by account number
     public void deleteAccount(String accNo) {
         accountDao.deleteAccount(accNo);
     }
 
-    // ✅ Show mini statement (list of recent transactions)
+    //  Show mini statement (list of recent transactions)
     public void showMiniStatement(String accNo) {
         List<TransactionRecord> transactions = txDao.getTransactionsByAccount(accNo);
         System.out.println("\nMini Statement for Account: " + accNo);
@@ -162,7 +162,7 @@ public class AccountManager {
         }
     }
 
-    // ✅ NEW — Get current balance
+    //  NEW — Get current balance
     public BigDecimal getBalance(String accNo) {
         Account a = accountDao.findByAccountNumber(accNo);
         if (a == null) {
@@ -171,11 +171,11 @@ public class AccountManager {
         return a.getBalance();
     }
 
-    // ✅ NEW — Verify PIN (for secure access)
+    //  NEW — Verify PIN (for secure access)
     public boolean verifyPin(String accNo, String enteredPin) {
         Account a = accountDao.findByAccountNumber(accNo);
         if (a == null) {
-            System.out.println("❌ Account not found: " + accNo);
+            System.out.println(" Account not found: " + accNo);
             return false;
         }
         String storedPin = a.getPassword(); // Assuming password = PIN

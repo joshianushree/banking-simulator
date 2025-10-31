@@ -10,7 +10,7 @@ public class BankingConsole {
         AccountManager manager = new AccountManager();
 
         System.out.println("====================================");
-        System.out.println("🏦  Welcome to Anushree Banking CLI  ");
+        System.out.println("  Welcome to  Banking CLI  ");
         System.out.println("====================================");
 
         boolean exit = false;
@@ -34,7 +34,7 @@ public class BankingConsole {
                     exit = true;
                     break;
                 default:
-                    System.out.println("⚠️ Invalid choice. Please enter 1, 2, or 3.");
+                    System.out.println("️ Invalid choice. Please enter 1, 2, or 3.");
             }
         }
 
@@ -54,7 +54,7 @@ public class BankingConsole {
 
             switch (c) {
                 case "1":
-                    createAccountFlow(sc, manager); // ✅ calls the validation method before inserting
+                    createAccountFlow(sc, manager); //  calls the validation method before inserting
                     break;
 
 
@@ -62,20 +62,20 @@ public class BankingConsole {
                     System.out.print("Enter account number to remove: ");
                     String rem = sc.nextLine().trim();
 
-                    // ✅ Validate 11-digit account number before deleting
+                    //  Validate 11-digit account number before deleting
                     if (!rem.matches("\\d{11}")) {
-                        System.out.println("❌ Invalid account number. Must be exactly 11 digits.");
+                        System.out.println(" Invalid account number. Must be exactly 11 digits.");
                         break;
                     }
 
                     manager.deleteAccount(rem);
-                    System.out.println("✅ Account Number deleted successfully.");
+                    System.out.println(" Account Number deleted successfully.");
                     break;
 
                 case "3":
                     List<Account> accounts = manager.listAllAccounts();
                     if (accounts.isEmpty()) {
-                        System.out.println("⚠️ No accounts found.");
+                        System.out.println("️ No accounts found.");
                     } else {
                         System.out.println("\n---- Existing Accounts ----");
                         for (Account a : accounts) {
@@ -97,7 +97,7 @@ public class BankingConsole {
                     break;
 
                 default:
-                    System.out.println("⚠️ Invalid choice. Please try again.");
+                    System.out.println(" Invalid choice. Please try again.");
             }
         }
     }
@@ -125,7 +125,7 @@ public class BankingConsole {
                         System.out.print("Enter amount to deposit: ");
                         BigDecimal depAmt = getBigDecimalFromUser(sc);
                         manager.deposit(depAcc, depAmt);
-                        System.out.println("✅ Deposit successful! Current Balance: ₹" + manager.getBalance(depAcc));
+                        System.out.println(" Deposit successful! Current Balance: ₹" + manager.getBalance(depAcc));
                         break;
 
                     case "2":
@@ -134,7 +134,7 @@ public class BankingConsole {
                         System.out.print("Enter amount to withdraw: ");
                         BigDecimal wAmt = getBigDecimalFromUser(sc);
                         manager.withdraw(wAcc, wAmt);
-                        System.out.println("✅ Withdrawal successful! Current Balance: ₹" + manager.getBalance(wAcc));
+                        System.out.println(" Withdrawal successful! Current Balance: ₹" + manager.getBalance(wAcc));
                         break;
 
                     case "3":
@@ -145,11 +145,11 @@ public class BankingConsole {
                         System.out.print("Enter amount to transfer: ");
                         BigDecimal tAmt = getBigDecimalFromUser(sc);
                         manager.transfer(from, to, tAmt);
-                        System.out.println("✅ Transfer successful!");
+                        System.out.println(" Transfer successful!");
                         System.out.println("Your updated balance: ₹" + manager.getBalance(from));
                         break;
 
-                    case "4": // ✅ Mini Statement with PIN verification
+                    case "4": //  Mini Statement with PIN verification
                         System.out.print("Enter account number: ");
                         String acc = sc.nextLine().trim();
                         System.out.print("Enter your PIN: ");
@@ -158,11 +158,11 @@ public class BankingConsole {
                         if (manager.verifyPin(acc, pin)) {
                             manager.showMiniStatement(acc);
                         } else {
-                            System.out.println("❌ Incorrect PIN. Access denied.");
+                            System.out.println(" Incorrect PIN. Access denied.");
                         }
                         break;
 
-                    case "5": // ✅ Balance check with PIN
+                    case "5": //  Balance check with PIN
                         System.out.print("Enter account number: ");
                         String balAcc = sc.nextLine().trim();
                         System.out.print("Enter your PIN: ");
@@ -172,7 +172,7 @@ public class BankingConsole {
                             BigDecimal balance = manager.getBalance(balAcc);
                             System.out.println("💰 Current Balance: ₹" + balance);
                         } else {
-                            System.out.println("❌ Incorrect PIN. Access denied.");
+                            System.out.println(" Incorrect PIN. Access denied.");
                         }
                         break;
 
@@ -181,11 +181,11 @@ public class BankingConsole {
                         break;
 
                     default:
-                        System.out.println("⚠️ Invalid choice. Please try again.");
+                        System.out.println(" Invalid choice. Please try again.");
                 }
 
             } catch (IllegalArgumentException e) {
-                System.out.println("⚠️ Error: " + e.getMessage());
+                System.out.println(" Error: " + e.getMessage());
             }
         }
     }
@@ -198,21 +198,21 @@ public class BankingConsole {
         System.out.print("Enter 11-digit Account Number: ");
         String accountNumber = sc.nextLine().trim();
         if (!accountNumber.matches("\\d{11}")) {
-            System.out.println("❌ Account number must be exactly 11 digits.");
+            System.out.println(" Account number must be exactly 11 digits.");
             return;
         }
 
         System.out.print("Enter Holder Name: ");
         String holderName = sc.nextLine().trim();
         if (holderName.isEmpty() || !holderName.matches("^[A-Za-z ]+$")) {
-            System.out.println("❌ Holder name must contain only alphabets and spaces (no numbers/symbols).");
+            System.out.println(" Holder name must contain only alphabets and spaces (no numbers/symbols).");
             return;
         }
 
         System.out.print("Enter Email: ");
         String email = sc.nextLine().trim();
         if (email.isEmpty() || !email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
-            System.out.println("❌ Invalid email format. Please enter a valid email (e.g., user@gmail.com).");
+            System.out.println(" Invalid email format. Please enter a valid email (e.g., user@gmail.com).");
             return;
         }
 
@@ -225,25 +225,25 @@ public class BankingConsole {
                 return;
             }
         } catch (NumberFormatException e) {
-            System.out.println("❌ Invalid amount. Enter a valid number.");
+            System.out.println(" Invalid amount. Enter a valid number.");
             return;
         }
 
         System.out.print("Enter Account Type (SAVINGS/CURRENT): ");
         String accountType = sc.nextLine().trim().toUpperCase();
         if (!accountType.equals("SAVINGS") && !accountType.equals("CURRENT")) {
-            System.out.println("❌ Invalid account type. Please enter SAVINGS or CURRENT.");
+            System.out.println(" Invalid account type. Please enter SAVINGS or CURRENT.");
             return;
         }
 
         System.out.print("Set 4-digit PIN: ");
         String pin = sc.nextLine().trim();
         if (!pin.matches("\\d{4}")) {
-            System.out.println("❌ PIN must be exactly 4 digits.");
+            System.out.println(" PIN must be exactly 4 digits.");
             return;
         }
 
-        // ✅ Create Account object using constructor
+        //  Create Account object using constructor
         Account account = new Account(
                 accountNumber,
                 holderName,

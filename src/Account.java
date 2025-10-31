@@ -17,7 +17,7 @@ public class Account {
     private String pin;                   // 4-digit PIN (mutable)
     private String status;                // ACTIVE / LOCKED / CLOSED
 
-    // ✅ Full constructor (used by DAO/test)
+    // Full constructor (used by DAO/test)
     public Account(String accountNumber,
                    String holderName,
                    String email,
@@ -47,18 +47,18 @@ public class Account {
         this.status = "ACTIVE"; // Default status
     }
 
-    // ✅ Compatibility constructor (older calls)
+    //  Compatibility constructor (older calls)
     public Account(String accountNumber, String holderName, String email, BigDecimal initialBalance) {
         this(accountNumber, holderName, email, initialBalance, "SAVINGS", null);
     }
 
-    // ✅ Generate random 11-digit account number
+    //  Generate random 11-digit account number
     private String generateAccountNumber() {
         String uuid = UUID.randomUUID().toString().replaceAll("\\D", "");
         return uuid.substring(0, 11);
     }
 
-    // ✅ Getters
+    //  Getters
     public String getAccountNumber() { return accountNumber; }
     public String getHolderName() { return holderName; }
     public String getEmail() { return email; }
@@ -68,7 +68,7 @@ public class Account {
     public String getPin() { return pin; }
     public String getStatus() { return status; }
 
-    // ✅ Setters (for mutable fields)
+    //  Setters (for mutable fields)
     public void setBalance(BigDecimal balance) {
         this.balance = (balance == null ? BigDecimal.ZERO : balance)
                 .setScale(2, BigDecimal.ROUND_HALF_EVEN);
@@ -84,12 +84,12 @@ public class Account {
         this.pin = pin;
     }
 
-    // ✅ Verify 4-digit PIN
+    //  Verify 4-digit PIN
     public boolean verifyPin(String enteredPin) {
         return this.pin != null && this.pin.equals(enteredPin);
     }
 
-    // ✅ Deposit money (validation included)
+    //  Deposit money (validation included)
     public void deposit(BigDecimal amount) throws InvalidAmountException {
         if (!ValidationUtils.isPositiveAmount(amount)) {
             throw new InvalidAmountException("Deposit amount must be positive.");
@@ -98,7 +98,7 @@ public class Account {
         this.balance = this.balance.add(amt);
     }
 
-    // ✅ Withdraw money (with validation and balance check)
+    //  Withdraw money (with validation and balance check)
     public void withdraw(BigDecimal amount)
             throws InvalidAmountException, InsufficientFundsException {
         if (!ValidationUtils.isPositiveAmount(amount)) {
@@ -113,7 +113,7 @@ public class Account {
         this.balance = this.balance.subtract(amt);
     }
 
-    // ✅ ToString for display
+    // ToString for display
     @Override
     public String toString() {
         return String.format(

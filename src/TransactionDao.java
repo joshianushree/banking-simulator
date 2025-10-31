@@ -42,7 +42,7 @@ public class TransactionDao {
         }
     }
 
-    // ✅ Fetch last N transactions for an account
+    //  Fetch last N transactions for an account
     public List<TransactionRecord> fetchLastNForAccount(String accNum, int n) {
         List<TransactionRecord> list = new ArrayList<>();
         String sql = "SELECT * FROM transactions WHERE from_account = ? OR to_account = ? ORDER BY created_at DESC LIMIT ?";
@@ -72,7 +72,7 @@ public class TransactionDao {
         return list;
     }
 
-    // ✅ Added: get all transactions for an account (fixes AccountManager error)
+    //  Added: get all transactions for an account (fixes AccountManager error)
     public List<TransactionRecord> getTransactionsByAccount(String accNum) {
         List<TransactionRecord> list = new ArrayList<>();
         String sql = "SELECT * FROM transactions WHERE from_account = ? OR to_account = ? ORDER BY created_at DESC";

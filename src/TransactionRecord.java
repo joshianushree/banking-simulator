@@ -6,12 +6,12 @@ import java.util.UUID;
 
 public class TransactionRecord {
 
-    // ✅ Enum for limited transaction types
+    //  Enum for limited transaction types
     public enum TxType {
         DEPOSIT, WITHDRAW, TRANSFER, ACCOUNT_CLOSED
     }
 
-    // ✅ Fields
+    //  Fields
     private final String txId;
     private final TxType txType;
     private final String fromAccount;
@@ -20,12 +20,12 @@ public class TransactionRecord {
     private final String category; // Optional (e.g., "Salary", "Bills", etc.)
     private LocalDateTime createdAt; // ⬅️ Removed 'final' so DB can set exact timestamp
 
-    // ✅ Constructor (most common)
+    //  Constructor (most common)
     public TransactionRecord(TxType txType, String fromAccount, String toAccount, BigDecimal amount) {
         this(txType, fromAccount, toAccount, amount, null);
     }
 
-    // ✅ Full constructor (with category)
+    //  Full constructor (with category)
     public TransactionRecord(TxType txType, String fromAccount, String toAccount, BigDecimal amount, String category) {
         this.txId = UUID.randomUUID().toString();
         this.txType = Objects.requireNonNull(txType, "Transaction type cannot be null");
@@ -36,14 +36,14 @@ public class TransactionRecord {
         this.createdAt = LocalDateTime.now();
     }
 
-    // ✅ Validate transaction amount
+    // Validate transaction amount
     private BigDecimal validateAmount(BigDecimal amt) {
         if (amt == null || amt.compareTo(BigDecimal.ZERO) < 0)
             throw new IllegalArgumentException("Transaction amount must be non-negative");
         return amt.setScale(2, BigDecimal.ROUND_HALF_EVEN);
     }
 
-    // ✅ Getters
+    //  Getters
     public String getTxId() { return txId; }
     public TxType getTxType() { return txType; }
     public String getFromAccount() { return fromAccount; }
@@ -52,18 +52,18 @@ public class TransactionRecord {
     public String getCategory() { return category; }
     public LocalDateTime getCreatedAt() { return createdAt; }
 
-    // ✅ Setter only for DAO (database loading)
+    //  Setter only for DAO (database loading)
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    // ✅ Date formatting helper
+    //  Date formatting helper
     public String getFormattedDate() {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         return createdAt.format(fmt);
     }
 
-    // ✅ ToString for display/logging
+    //  ToString for display/logging
     @Override
     public String toString() {
         return String.format(

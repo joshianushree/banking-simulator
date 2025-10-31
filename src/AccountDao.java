@@ -24,61 +24,61 @@ public class AccountDao {
 
     // ------------------- CREATE -------------------
     public void createAccount(Account a) {
-        // ✅ Basic null check
+        //  Basic null check
         if (a == null) {
-            System.out.println("❌ Account details cannot be null.");
+            System.out.println(" Account details cannot be null.");
             return;
         }
 
-        // ✅ Validate Account Number (exactly 11 digits)
+        //  Validate Account Number (exactly 11 digits)
         String accNum = a.getAccountNumber();
         if (accNum == null || !accNum.matches("\\d{11}")) {
-            System.out.println("❌ Account number must be exactly 11 digits.");
+            System.out.println(" Account number must be exactly 11 digits.");
             return;
         }
 
-        // ✅ Prevent duplicate account numbers
+        //  Prevent duplicate account numbers
         if (findByAccountNumber(accNum) != null) {
-            System.out.println("❌ Account already exists: " + accNum);
+            System.out.println("Account already exists: " + accNum);
             return;
         }
 
-        // ✅ Validate Holder Name (alphabets + spaces)
+        // Validate Holder Name (alphabets + spaces)
         String name = a.getHolderName();
         if (name == null || name.trim().isEmpty()) {
-            System.out.println("❌ Holder name cannot be empty.");
+            System.out.println("Holder name cannot be empty.");
             return;
         }
         if (!name.matches("^[A-Za-z ]+$")) {
-            System.out.println("❌ Holder name must contain only alphabets and spaces.");
+            System.out.println("Holder name must contain only alphabets and spaces.");
             return;
         }
 
-        // ✅ Validate Email (simple regex)
+        //  Validate Email (simple regex)
         String email = a.getEmail();
         if (email == null || email.trim().isEmpty()) {
             System.out.println("❌ Email cannot be empty.");
             return;
         }
         if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
-            System.out.println("❌ Invalid email format. Example: user@gmail.com");
+            System.out.println(" Invalid email format. Example: user@gmail.com");
             return;
         }
 
-        // ✅ Validate PIN (exactly 4 digits)
+        // Validate PIN (exactly 4 digits)
         String pin = a.getPin();
         if (pin == null || !pin.matches("\\d{4}")) {
-            System.out.println("❌ PIN must be exactly 4 digits.");
+            System.out.println(" PIN must be exactly 4 digits.");
             return;
         }
 
-        // ✅ Validate Account Type
+        //  Validate Account Type
         String type = a.getAccountType();
         if (type == null || type.trim().isEmpty()) {
             type = "SAVINGS";
         }
 
-        // ✅ SQL Insert Query (matches DB columns)
+        //  SQL Insert Query (matches DB columns)
         String sql = "INSERT INTO accounts " +
                 "(account_number, holder_name, email, balance, created_at, account_type, pin, last_activity, status, failed_attempts, is_locked) " +
                 "VALUES (?,?,?,?,?,?,?,?, 'ACTIVE', 0, FALSE)";
@@ -96,9 +96,9 @@ public class AccountDao {
             ps.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now()));
 
             ps.executeUpdate();
-            System.out.println("✅ Account created successfully: " + accNum);
+            System.out.println(" Account created successfully: " + accNum);
         } catch (SQLException e) {
-            System.out.println("❌ Database error while creating account.");
+            System.out.println(" Database error while creating account.");
             e.printStackTrace();
         }
     }
@@ -170,12 +170,12 @@ public class AccountDao {
         }
     }
 
-    // ✅ NEW: method to match old updateBalance() calls
+    //  NEW: method to match old updateBalance() calls
     public void updateBalance(Account account) {
         updateBalanceAndActivity(account); // redirect for backward compatibility
     }
 
-    // ✅ NEW: method to match old updateAccountStatus() calls
+    //  NEW: method to match old updateAccountStatus() calls
     public void updateAccountStatus(Account account) {
         String sql = "UPDATE accounts SET status = ? WHERE account_number = ?";
         try (Connection conn = getConnection();
