@@ -30,7 +30,7 @@ public class BankingConsole {
                     transactionsMenu(sc, manager);
                     break;
                 case "3":
-                    System.out.println("\nThank you for using Anushree Banking CLI! 👋");
+                    System.out.println("\nThank you for using Banking CLI! ");
                     exit = true;
                     break;
                 default:
@@ -170,7 +170,7 @@ public class BankingConsole {
 
                         if (manager.verifyPin(balAcc, balPin)) {
                             BigDecimal balance = manager.getBalance(balAcc);
-                            System.out.println("💰 Current Balance: ₹" + balance);
+                            System.out.println(" Current Balance: ₹" + balance);
                         } else {
                             System.out.println(" Incorrect PIN. Access denied.");
                         }
